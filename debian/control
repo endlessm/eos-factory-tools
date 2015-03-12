@@ -1,0 +1,12 @@
+Source: eos-factory-test
+Section: admin
+Priority: optional
+Maintainer: Daniel Drake <drake@endlessm.com>
+Build-Depends: debhelper (>= 8), dh-systemd, libglib2.0-dev, libudisks2-dev
+Standards-Version: 3.9.1
+Homepage: https://endlessm.com
+
+Package: eos-factory-test
+Architecture: any
+Description: Endless factory test environment
+Depends: ${misc:Depends}, dracut, xinit, xterm
