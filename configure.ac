@@ -15,5 +15,6 @@ AM_CONDITIONAL(ENABLE_SYSTEMD, [test "$enable_systemd" = yes])
 
 AC_CONFIG_FILES([
 	Makefile
-	factory-test/Makefile])
+	factory-test/Makefile
+	mfgdata/Makefile])
 AC_OUTPUT

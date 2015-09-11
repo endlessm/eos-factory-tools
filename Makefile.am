@@ -1,2 +1,2 @@
-SUBDIRS = factory-test
+SUBDIRS = factory-test mfgdata
 EXTRA_DIST = debian
