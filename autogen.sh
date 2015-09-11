@@ -1,7 +1,7 @@
 #!/bin/sh
 # Run this to generate all the initial makefiles, etc.
 
-PROJECT=eos-factory-test
+PROJECT=eos-factory-tools
 builddir=`pwd`
 srcdir=`dirname "$0"`
 [ -z "$srcdir" ] && srcdir=.
