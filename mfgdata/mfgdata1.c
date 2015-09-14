@@ -343,7 +343,7 @@ static gboolean add_entry(const char *tag, const char *value)
 		return FALSE;
 	}
 
-	switch (tag_info->type) {
+	switch (info->type) {
 	case TAG_TYPE_ASCII:
 		if (strlen(value) == 0) {
 			fprintf(stderr, "Tag %s has empty data.\n", tag);
