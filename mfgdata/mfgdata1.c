@@ -326,7 +326,7 @@ static gboolean parse_mac_address(const char *str, unsigned char *out)
 		if (values[i] >= 256)
 			return FALSE;
 
-        out[i] = (unsigned char) values[i];
+		out[i] = (unsigned char) values[i];
 	}
 
 	return TRUE;
@@ -343,7 +343,7 @@ static gboolean add_entry(const char *tag, const char *value)
 		return FALSE;
 	}
 
-	switch (tag_info->type) {
+	switch (info->type) {
 	case TAG_TYPE_ASCII:
 		if (strlen(value) == 0) {
 			fprintf(stderr, "Tag %s has empty data.\n", tag);
@@ -416,7 +416,7 @@ static gboolean print_and_check_entry(const char *tag, GBytes *data)
 		break;
 	case TAG_TYPE_MAC_ADDRESS:
 		if (length == 6)
-			printf("%02x:%02x:%02x:%02x:%02x:%02x",
+			printf("%02X:%02X:%02X:%02X:%02X:%02X",
 				   value[0], value[1], value[2], value[3], value[4], value[5]);
 		break;
 	}
