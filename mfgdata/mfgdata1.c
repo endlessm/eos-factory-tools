@@ -39,18 +39,6 @@ static const struct tag_info {
 		.required_length = 0,
 		.type = TAG_TYPE_ASCII,
 	}, {
-		.tag = "PID",
-		.description = "Endless Product ID",
-		.required = TRUE,
-		.required_length = 0,
-		.type = TAG_TYPE_ASCII,
-	}, {
-		.tag = "SKU",
-		.description = "SKU identifier",
-		.required = TRUE,
-		.required_length = 0,
-		.type = TAG_TYPE_ASCII,
-	}, {
 		.tag = "SSN",
 		.description = "System Serial Number",
 		.required = TRUE,
