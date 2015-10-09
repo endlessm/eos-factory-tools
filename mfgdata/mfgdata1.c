@@ -56,12 +56,6 @@ static const struct tag_info {
 		.required = TRUE,
 		.required_length = 6,
 		.type = TAG_TYPE_MAC_ADDRESS,
-	}, {
-		.tag = "BMAC",
-		.description = "Bluetooth MAC address",
-		.required = FALSE,
-		.required_length = 6,
-		.type = TAG_TYPE_MAC_ADDRESS,
 	},
 };
 
