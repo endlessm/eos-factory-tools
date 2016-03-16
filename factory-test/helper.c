@@ -1,4 +1,5 @@
 #include <glib.h>
+#include <string.h>
 #include <udisks/udisks.h>
 
 #define FILE_READ_CHUNK_SIZE (1024 * 256)
