@@ -35,8 +35,8 @@ try_exec_test_suite(void)
 		return;
 
 	g_message("Test suite found - loading");
-	execl("/bin/systemctl", "systemctl", "isolate", "eos-factory-test.target",
-		  NULL);
+	execl("/bin/systemctl", "systemctl", "isolate",
+	      "eos-factory-test.target", NULL);
 	g_critical("Failed to execute systemctl :(");
 	_exit(1);
 }
@@ -61,7 +61,7 @@ read_checksum(GFile *mount, char **out_checksum)
 
 	checksum_file = g_file_get_child(mount, EOS_FACTORY_TEST_TAR ".sha256");
 	ret = g_file_load_contents(checksum_file, NULL, out_checksum, &length,
-							   NULL, &err);
+				   NULL, &err);
 	g_object_unref(checksum_file);
 	if (!ret) {
 		g_warning("Failed to read checksum: %s", err->message);
@@ -95,7 +95,7 @@ copy_test_suite(GFile *mount)
 	g_file_make_directory_with_parents(fts_dir, NULL, NULL);
 	dst_file = g_file_get_child(fts_dir, EOS_FACTORY_TEST_TAR);
 	ret = g_file_copy(src_file, dst_file, G_FILE_COPY_OVERWRITE, NULL, NULL,
-					  NULL, &err);
+			  NULL, &err);
 	g_object_unref(src_file);
 	g_object_unref(fts_dir);
 	if (!ret) {
@@ -129,7 +129,8 @@ verify_checksum(GFile *test_suite, const char *checksum_cmp)
 	buf = g_malloc(FILE_READ_CHUNK_SIZE);
 	do {
 		bytes_read = g_input_stream_read(input_stream, buf,
-										 FILE_READ_CHUNK_SIZE, NULL, &err);
+						 FILE_READ_CHUNK_SIZE, NULL,
+						 &err);
 		if (bytes_read > 0) {
 			g_checksum_update(checksum, buf, bytes_read);
 		} else if (bytes_read < 0) {
@@ -165,13 +166,13 @@ extract_test_suite(GFile *test_suite)
 	int exitcode;
 	gboolean ret;
 
-	cmdline = g_strdup_printf("tar -C %s -xf %s",
-							  EOS_FACTORY_TEST_DIR, test_suite_path);
+	cmdline = g_strdup_printf("tar -C %s -xf %s", EOS_FACTORY_TEST_DIR,
+				  test_suite_path);
 	g_free(test_suite_path);
 
 	g_message("Spawning: %s", cmdline);
-	ret = g_spawn_command_line_sync(cmdline, &standard_output, &standard_error,
-									&exitcode, &err);
+	ret = g_spawn_command_line_sync(cmdline, &standard_output,
+					&standard_error, &exitcode, &err);
 	g_free(cmdline);
 	g_free(standard_output);
 	if (!ret) {
@@ -255,7 +256,8 @@ mount_fs(UDisksFilesystem *fs)
 	g_variant_dict_insert(&dict, "options", "s", "ro");
 	opts = g_variant_dict_end(&dict);
 
-	ret = udisks_filesystem_call_mount_sync(fs, opts, &mount_path, NULL, &err);
+	ret = udisks_filesystem_call_mount_sync(fs, opts, &mount_path, NULL,
+						&err);
 	if (!ret) {
 		g_warning("Failed to mount: %s", err->message);
 		return;
@@ -280,7 +282,7 @@ check_udisks_object(UDisksObject *object)
 	gboolean removable;
 
 	g_debug("checking %s",
-			g_dbus_object_get_object_path(G_DBUS_OBJECT(object)));
+		g_dbus_object_get_object_path(G_DBUS_OBJECT(object)));
 	fs = udisks_object_get_filesystem(object);
 	if (!fs) {
 		g_debug("not a filesystem");
@@ -344,7 +346,7 @@ find_drives(void)
 
 static void
 udisks_object_added(GDBusObjectManager *manager, GDBusObject *object,
-					gpointer user_data)
+		    gpointer user_data)
 {
 	check_home_dir();
 	check_udisks_object(UDISKS_OBJECT(object));
@@ -369,8 +371,8 @@ main(void)
 	find_drives();
 	try_exec_test_suite();
 
-	g_signal_connect(manager, "object-added", G_CALLBACK(udisks_object_added),
-					 NULL);
+	g_signal_connect(manager, "object-added",
+			 G_CALLBACK(udisks_object_added), NULL);
 
 	g_message("Waiting for storage devices");
 	g_debug("Start main loop");
