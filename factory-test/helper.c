@@ -3,9 +3,9 @@
 
 #define FILE_READ_CHUNK_SIZE (1024 * 256)
 #define CHECKSUM_SIZE 64 /* SHA256 */
-#define WISTRON_PATH "/var/wistron"
-#define WISTRON_TEST_SUITE_START WISTRON_PATH "/start.sh"
-#define WISTRON_TEST_SUITE_TAR "Wistron_Factory_Test.tar"
+#define EOS_FACTORY_TEST_DIR "/var/eos-factory-test"
+#define EOS_FACTORY_TEST_START EOS_FACTORY_TEST_DIR "/start.sh"
+#define EOS_FACTORY_TEST_TAR "Endless_Factory_Test.tar"
 
 static UDisksClient *client = NULL;
 static GDBusObjectManager *manager;
@@ -31,7 +31,7 @@ try_exec_test_suite(void)
 {
 	check_home_dir();
 
-	if (!g_file_test(WISTRON_TEST_SUITE_START, G_FILE_TEST_IS_EXECUTABLE))
+	if (!g_file_test(EOS_FACTORY_TEST_START, G_FILE_TEST_IS_EXECUTABLE))
 		return;
 
 	g_message("Test suite found - loading");
@@ -59,7 +59,7 @@ read_checksum(GFile *mount, char **out_checksum)
 	gsize length;
 	gboolean ret;
 
-	checksum_file = g_file_get_child(mount, WISTRON_TEST_SUITE_TAR ".sha256");
+	checksum_file = g_file_get_child(mount, EOS_FACTORY_TEST_TAR ".sha256");
 	ret = g_file_load_contents(checksum_file, NULL, out_checksum, &length,
 							   NULL, &err);
 	g_object_unref(checksum_file);
@@ -85,19 +85,19 @@ read_checksum(GFile *mount, char **out_checksum)
 static GFile *
 copy_test_suite(GFile *mount)
 {
-	GFile *wistron_dir = g_file_new_for_path(WISTRON_PATH);
-	GFile *src_file = g_file_get_child(mount, WISTRON_TEST_SUITE_TAR);
+	GFile *fts_dir = g_file_new_for_path(EOS_FACTORY_TEST_DIR);
+	GFile *src_file = g_file_get_child(mount, EOS_FACTORY_TEST_TAR);
 	GFile *dst_file;
 	GError *err = NULL;
 	gboolean ret;
 
-	g_message("Copying test suite to %s", WISTRON_PATH);
-	g_file_make_directory_with_parents(wistron_dir, NULL, NULL);
-	dst_file = g_file_get_child(wistron_dir, WISTRON_TEST_SUITE_TAR);
+	g_message("Copying test suite to %s", EOS_FACTORY_TEST_DIR);
+	g_file_make_directory_with_parents(fts_dir, NULL, NULL);
+	dst_file = g_file_get_child(fts_dir, EOS_FACTORY_TEST_TAR);
 	ret = g_file_copy(src_file, dst_file, G_FILE_COPY_OVERWRITE, NULL, NULL,
 					  NULL, &err);
 	g_object_unref(src_file);
-	g_object_unref(wistron_dir);
+	g_object_unref(fts_dir);
 	if (!ret) {
 		g_warning("Failed to copy test suite: %s", err->message);
 		g_error_free(err);
@@ -166,7 +166,7 @@ extract_test_suite(GFile *test_suite)
 	gboolean ret;
 
 	cmdline = g_strdup_printf("tar -C %s -xf %s",
-							  WISTRON_PATH, test_suite_path);
+							  EOS_FACTORY_TEST_DIR, test_suite_path);
 	g_free(test_suite_path);
 
 	g_message("Spawning: %s", cmdline);
