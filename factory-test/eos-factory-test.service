@@ -4,7 +4,7 @@ Conflicts=getty@tty1.service gdm.service plymouth-start.service
 After=systemd-user-sessions.service getty@tty1.service plymouth-quit.service gdm.service
 
 [Service]
-ExecStart=/usr/bin/xinit /usr/bin/xterm -bw 0 -e /var/wistron/start.sh
+ExecStart=/usr/bin/xinit /usr/bin/xterm -bw 0 -e /var/eos-factory-test/start.sh
 StandardOutput=syslog
 StandardError=inherit
 
