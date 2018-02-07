@@ -5,6 +5,7 @@ After=systemd-user-sessions.service getty@tty1.service plymouth-quit.service gdm
 
 [Service]
 ExecStart=/usr/bin/xinit /usr/bin/xterm -bw 0 -e /var/eos-factory-test/start.sh
+ExecStartPost=-/usr/lib/grub/record-boot-status
 StandardOutput=syslog
 StandardError=inherit
 
