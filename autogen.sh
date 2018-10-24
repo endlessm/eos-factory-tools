@@ -18,3 +18,4 @@ if [ -z "$NOCONFIGURE" ]; then
 else
     echo "Now type './configure && make' to compile $PROJECT."
 fi
+
