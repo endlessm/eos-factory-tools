@@ -4,7 +4,7 @@ Conflicts=getty@tty1.service gdm.service plymouth-start.service
 After=systemd-user-sessions.service getty@tty1.service plymouth-quit.service gdm.service
 
 [Service]
-ExecStart=/usr/bin/xinit /usr/bin/xterm -bw 0 -e /var/eos-factory-test/start.sh
+ExecStart=/usr/bin/mutter --wayland -- gnome-terminal --hide-menubar --title "Endless OS Factory Test" --maximize --wait -- /var/eos-factory-test/start.sh
 ExecStartPost=-/usr/lib/grub/record-boot-status
 
 [Install]

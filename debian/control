@@ -9,7 +9,10 @@ Homepage: https://endlessm.com
 Package: eos-factory-tools
 Architecture: any
 Description: Endless factory tools
-Depends: ${misc:Depends}, dracut, xinit, xterm
+Depends: ${misc:Depends},
+         dracut,
+         gnome-terminal,
+         mutter,
 Provides: eos-factory-test
 Replaces: eos-factory-test
 Conflicts: eos-factory-test
