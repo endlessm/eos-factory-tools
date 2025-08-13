@@ -10,7 +10,8 @@ PKG_CHECK_MODULES([UDISKS], [udisks2])
 
 AC_ARG_ENABLE([systemd],
 	[systemd integration],
-	enable_systemd=$enableval, enable_systemd=no)
+	enable_systemd=$enableval,
+	enable_systemd=yes)
 AM_CONDITIONAL(ENABLE_SYSTEMD, [test "$enable_systemd" = yes])
 
 AC_CONFIG_FILES([
