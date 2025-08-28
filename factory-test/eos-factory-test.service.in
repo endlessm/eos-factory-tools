@@ -10,7 +10,7 @@ Type=simple
 # "XDG_SESSION_ID" for mutter in wayland mode.
 User=root
 PAMName=login
-ExecStart=/usr/bin/mutter --wayland --no-x11 --display-server -- gnome-terminal --hide-menubar --title "Endless OS Factory Test" --maximize --wait -- /var/eos-factory-test/start.sh
+ExecStart=/usr/bin/mutter --wayland --no-x11 --display-server -- @TERMINAL@ @TERMINAL_PARAM@ -- /var/eos-factory-test/start.sh
 ExecStartPost=-/usr/lib/grub/record-boot-status
 # Give a seat binding to tty1 to the user session, so mutter shows up to tty1.
 TTYPath=/dev/tty1
