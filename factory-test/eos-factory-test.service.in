@@ -1,0 +1,19 @@
+[Unit]
+Description=Endless factory test
+Conflicts=getty@tty1.service gdm.service plymouth-start.service
+After=systemd-user-sessions.service getty@tty1.service plymouth-quit.service gdm.service
+
+[Service]
+Type=simple
+# Forcing root login makes pam_systemd register user sessions with the systemd
+# login manager systemd-logind.service. It prepares env "XDG_RUNTIME_DIR" and
+# "XDG_SESSION_ID" for mutter in wayland mode.
+User=root
+PAMName=login
+ExecStart=/usr/bin/mutter --wayland --no-x11 --display-server -- @TERMINAL@ @TERMINAL_PARAM@ -- /var/eos-factory-test/start.sh
+ExecStartPost=-/usr/lib/grub/record-boot-status
+# Give a seat binding to tty1 to the user session, so mutter shows up to tty1.
+TTYPath=/dev/tty1
+
+[Install]
+WantedBy=eos-factory-test.target
